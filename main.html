@@ -160,21 +160,78 @@
 <script type="text/javascript" src="rtc.js"></script>
 
 <script type="text/javascript">
-//window.ondragstart = function(e)       { e.preventDefault(); }         // IMPORTANT - FIX BUG
-//document.onmousedown = function(e)       { e.preventDefault(); }         // IMPORTANT - FIX BUG / DISABLE AUTOMATIC SELECT OF ELEMENT
-
 'use strict';
 var smartphone;
 document.getElementById('computer').onmousedown = function(e) {
     smartphone = false;
     document.body.classList.add('computer');
 
-    var win0 = DOM.create_New_Window('th. du complot',{'x':70,'y':30,'w':30,'h':70},{'border':'#e74c3c','body':'black'},{'type':'video','url':'./medias/complot.mp4','ratio':true,'opacity':true});
-    var win1 = DOM.create_New_Window('Macaron',{'x':37,'y':28,'w':40,'h':45},{'border':'#f1c40f','body':'#ecf0f1'},{'type':'image','url':'./medias/macaron.jpg','ratio':true});
-    var win2 = DOM.create_New_Window('Farador',{'x':0,'y':0,'w':90,'h':60},{'border':'#2980b9','body':'black'},{'type':'video','url':'./medias/farador.mp4','ratio':true});
-    var win3 = DOM.create_New_Window('Raw Text',{'x':58,'y':4,'w':40,'h':25},{'border':'#9b59b6','body':'#220022'},{'type':'rawTxt'});
+    var win0 = DOM.create_New_Window('th. du complot', {
+        'x': 70,
+        'y': 30,
+        'w': 30,
+        'h': 70
+    }, {
+        'border': '#e74c3c',
+        'body': 'black'
+    }, {
+        'type': 'video',
+        'url': './medias/complot.mp4',
+        'ratio': true,
+        'opacity': true
+    });
+    var win1 = DOM.create_New_Window('Macaron', {
+        'x': 37,
+        'y': 28,
+        'w': 40,
+        'h': 45
+    }, {
+        'border': '#f1c40f',
+        'body': '#ecf0f1'
+    }, {
+        'type': 'image',
+        'url': './medias/macaron.jpg',
+        'ratio': true
+    });
+    var win2 = DOM.create_New_Window('Farador', {
+        'x': 0,
+        'y': 0,
+        'w': 90,
+        'h': 60
+    }, {
+        'border': '#2980b9',
+        'body': 'black'
+    }, {
+        'type': 'video',
+        'url': './medias/farador.mp4',
+        'ratio': true
+    });
+    var win3 = DOM.create_New_Window('Raw Text', {
+        'x': 58,
+        'y': 4,
+        'w': 40,
+        'h': 25
+    }, {
+        'border': '#9b59b6',
+        'body': '#220022'
+    }, {
+        'type': 'rawTxt'
+    });
     // var win5 = DOM.create_New_Window('Reality Revisited',{'x':5,'y':35,'w':40,'h':60},{'border':'#c0392b','body':'#002200'},{'type':'iframe','url':'http://192.168.0.100/Realityrevisited.V2.0/'});
-    var fox_Box = DOM.create_New_Window('chatbox du futur',{'x':2,'y':42,'w':35,'h':50},{'border':'#00CC00','body':'#002200'},{'type':'customContent','id':'chat','fullscreen':true,'opacity':false});
+    var fox_Box = DOM.create_New_Window('chatbox du futur', {
+        'x': 2,
+        'y': 42,
+        'w': 35,
+        'h': 50
+    }, {
+        'border': '#00CC00',
+        'body': '#002200'
+    }, {
+        'type': 'customContent',
+        'id': 'chat',
+        'fullscreen': true,
+        'opacity': false
+    });
 
     new main();
     e.preventDefault();
@@ -183,7 +240,20 @@ document.getElementById('computer').onmousedown = function(e) {
 document.getElementById('smartphone').onmousedown = function(e) {
     smartphone = true;
 
-    var fox_Box = DOM.create_New_Window('chatbox du futur',{'x':2,'y':42,'w':35,'h':50},{'border':'#00CC00','body':'#002200'},{'type':'customContent','id':'chat','fullscreen':true,'opacity':false});
+    var fox_Box = DOM.create_New_Window('chatbox du futur', {
+        'x': 2,
+        'y': 42,
+        'w': 35,
+        'h': 50
+    }, {
+        'border': '#00CC00',
+        'body': '#002200'
+    }, {
+        'type': 'customContent',
+        'id': 'chat',
+        'fullscreen': true,
+        'opacity': false
+    });
 
     new main();
     e.preventDefault();
@@ -193,123 +263,119 @@ var main = function() {
     document.getElementById('devices').style.display = 'none';
     var chat = new Chatbox();
     //display = function(msg) { chat.display(msg); }
-    postMsg = function()    { chat.postMsg();  }
+    postMsg = function() {
+        chat.postMsg();
+    }
     server.set_Identify_Field(document.getElementsByTagName("form")[0]);
     server.connect();
 }
 
-
-//var display = function() {}
 var postMsg = function() {}
 var formInput;
 var user_To_Share = false;
 
 var Chatbox = function() {
-    this.postMsg = (function()
-    {
+    this.postMsg = (function() {
         var Z = new RegExp("^/");
         var A = new RegExp("^/share ");
-            var A1 = new RegExp("^/new ");
-            var A2 = new RegExp("^/renew ");
-            var A3 = new RegExp("^/close ");
+        var A1 = new RegExp("^/new ");
+        var A2 = new RegExp("^/renew ");
+        var A3 = new RegExp("^/close ");
         var B = new RegExp("^/exit$");
         var C = new RegExp("^/connect$");
 
         var constructor = function() {
             if (formInput.value.match(Z)) {
                 if (formInput.value.match(A)) {
-                    var result = formInput.value.replace(A,'');
+                    var result = formInput.value.replace(A, '');
                     if (result.match(A1)) {
-                        result = result.replace(A1,'');
-                        for (var i=0, len=server.users_List.length; i<len; i++) {
+                        result = result.replace(A1, '');
+                        for (var i = 0, len = server.users_List.length; i < len; i++) {
                             if (result == server.users_List[i]) {
                                 user_To_Share = result;
-                                display(RTC.initializeNewInstance(server.user,user_To_Share,false)+'\n');
+                                display(RTC.initializeNewInstance(server.user, user_To_Share, false) + '\n');
                                 formInput.value = null;
                                 return;
                             }
                         }
                         display("Vous ne pouvez partager avec un ami inexistant !\n");
-                    }
-                    else if (result.match(A2)) {
-                        result = result.replace(A2,'');
-                        for (var i=0, len=server.users_List.length; i<len; i++) {
+                    } else if (result.match(A2)) {
+                        result = result.replace(A2, '');
+                        for (var i = 0, len = server.users_List.length; i < len; i++) {
                             if (result == server.users_List[i]) {
                                 user_To_Share = result;
-                                display(RTC.initializeNewInstance(server.user,user_To_Share,true)+'\n');
+                                display(RTC.initializeNewInstance(server.user, user_To_Share, true) + '\n');
                                 formInput.value = null;
                                 return;
                             }
                         }
                         display("Vous ne pouvez partager avec un ami inexistant !\n");
-                    }
-                    else if (result.match(A3)) {
-                        result = result.replace(A3,'');
-                        for (var i=0, len=server.users_List.length; i<len; i++) {
+                    } else if (result.match(A3)) {
+                        result = result.replace(A3, '');
+                        for (var i = 0, len = server.users_List.length; i < len; i++) {
                             if (result == server.users_List[i]) {
                                 user_To_Share = result;
-                                display(RTC.closeSession(user_To_Share)+'\n');
+                                display(RTC.closeSession(user_To_Share) + '\n');
                                 formInput.value = null;
                                 return;
                             }
                         }
                         display("Vous ne pouvez clore une session avec un ami inexistant !\n");
-                    }
-                    else    display("Comande /share incompréhensible !\n");
-                }
-                else if (formInput.value.match(B)) {
+                    } else display("Comande /share incompréhensible !\n");
+                } else if (formInput.value.match(B)) {
                     RTC.closeAllSessions();
                     server.disconnect();
-                }
-                else if (formInput.value.match(C)) server.connect();
-                else server.send('CHAT',formInput.value);
-            }
-            else     server.send('CHAT',formInput.value);
+                } else if (formInput.value.match(C)) server.connect();
+                else server.send('CHAT', formInput.value);
+            } else server.send('CHAT', formInput.value);
             formInput.value = null;
         }
         return constructor;
     })();
 
-    var File_Center = (function(){
+    var File_Center = (function() {
         var fileInput = document.getElementById('fileInput');
 
         fileInput.addEventListener('change', function(e) {
-            if (fileInput.files.length == 1) DOM.create_New_Window(fileInput.files[0].name,false,false,false,{'type':'upload','file':fileInput.files[0]});
-            else RTC.sendFile(fileInput.files,user_To_Share);
+            if (fileInput.files.length == 1) DOM.create_New_Window(fileInput.files[0].name, false, false, false, {
+                'type': 'upload',
+                'file': fileInput.files[0]
+            });
+            else RTC.sendFile(fileInput.files, user_To_Share);
         });
     })();
 
     var chatTab = document.getElementById("chatTab");
     chatTab.innerHTML = "";
 
-    var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+    var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel";
     chatTab.addEventListener(mousewheelevt, function(e) {
         var e = window.event || e; // old IE support
         var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-        chatTab.scrollTop -= delta*20;
+        chatTab.scrollTop -= delta * 20;
     }, false);
 
     window.display = function(msg) {
-        chatTab.innerHTML+=msg;
-        chatTab.scrollTop+=10000;
+        chatTab.innerHTML += msg;
+        chatTab.scrollTop += 10000;
     }
 
     formInput = document.getElementsByTagName("input")[1];
 }
 
-var NodeServer = function(ip,port_Order) {
+var NodeServer = function(ip, port_Order) {
     var password = false;
 
-    var serverType = {             // 1-L'utilisation de l'API crypto passe forcément pas une page HTTPS sur la dernière version de chrome
-        ssl    : false,            // 2-Aucune regression de sécurité n'est possible, si la page source est HTTPS le serveur node doit etre SSL aussi.
-        ws    : 'ws://'+ip+':'+(port_Order+81)+'/',
-        wss    : 'wss://'+ip+':'+(port_Order+444)+'/'
+    var serverType = { // 1-L'utilisation de l'API crypto passe forcément pas une page HTTPS sur la dernière version de chrome
+        ssl: false, // 2-Aucune regression de sécurité n'est possible, si la page source est HTTPS le serveur node doit etre SSL aussi.
+        ws: 'ws://' + ip + ':' + (port_Order + 81) + '/',
+        wss: 'wss://' + ip + ':' + (port_Order + 444) + '/'
     };
-    var addr=(serverType.ssl || location.protocol == 'https:')?serverType.wss:serverType.ws;
+    var addr = (serverType.ssl || location.protocol == 'https:') ? serverType.wss : serverType.ws;
 
     var txtNode;
     this.set_Identify_Field = function(identify_Field) {
-        txtNode = identify_Field.insertBefore(document.createTextNode(''),identify_Field.firstChild);
+        txtNode = identify_Field.insertBefore(document.createTextNode(''), identify_Field.firstChild);
     }
 
     var self = this;
@@ -317,10 +383,14 @@ var NodeServer = function(ip,port_Order) {
     this.user = "";
 
     var socket = null;
-    var open = function() { display("Connexion au serveur réussie.\n"); }
-    var error = function() { display("Aucune réponse du serveur. Vous ne pouvez rien y faire !\n");  }
-    var message = function(str){
-        console.log('msg received from server:'+str);
+    var open = function() {
+        display("Connexion au serveur réussie.\n");
+    }
+    var error = function() {
+        display("Aucune réponse du serveur. Vous ne pouvez rien y faire !\n");
+    }
+    var message = function(str) {
+        console.log('msg received from server:' + str);
         var obj = JSON.parse(str.data);
         switch (obj.type) {
             case 'SERVER':
@@ -333,88 +403,92 @@ var NodeServer = function(ip,port_Order) {
                 }
                 if (password) return;
 
-                if (obj.kick) {                                            // Réponse du berger à la bergère, tant que le pseudo n'est pas bon, le serveur répond 'kick' !
+                if (obj.kick) { // Réponse du berger à la bergère, tant que le pseudo n'est pas bon, le serveur répond 'kick' !
                     display("Ce pseudo là est déjà enregistré, veuillez en utiliser un autre...\n");
-                }
-                else if (obj.name) {
-                    console.log('enregistrement du nom de user:'+obj.name);
+                } else if (obj.name) {
+                    console.log('enregistrement du nom de user:' + obj.name);
                     self.user = obj.name;
-                    formInput.setAttribute("style","width:98%");
+                    formInput.setAttribute("style", "width:98%");
                     txtNode.nodeValue = null;
-                }
-                else if (obj.new) {
-                    console.log(obj.new+' length:'+obj.new.length);                    // new possède la liste du ou des nouveaux arrivants.
-                    for (var i=0, len=obj.new.length; i<len; i++) self.users_List.push(obj.new[i]);
-                }
-                else if (obj.out) {                                        // out informe qu'un client est partit ! in-out in-out
-                    for (var i=0, len=self.users_List.length; i<len; i++) {
+                } else if (obj.new) {
+                    console.log(obj.new + ' length:' + obj.new.length); // new possède la liste du ou des nouveaux arrivants.
+                    for (var i = 0, len = obj.new.length; i < len; i++) self.users_List.push(obj.new[i]);
+                } else if (obj.out) { // out informe qu'un client est partit ! in-out in-out
+                    for (var i = 0, len = self.users_List.length; i < len; i++) {
                         if (obj.out == self.users_List[i]) {
-                            self.users_List.splice(i,1);
+                            self.users_List.splice(i, 1);
                             break;
-                }}}
-                console.log('current user list ->'+self.users_List.join(' '));
+                        }
+                    }
+                }
+                console.log('current user list ->' + self.users_List.join(' '));
                 break;
             case 'CHAT':
                 display(obj.data);
                 break;
             case 'OFFER':
-                console.log('offer received'+JSON.stringify(obj.data));
-                RTC.initializePeerInstance(obj.from,obj.to,obj.data);
+                console.log('offer received' + JSON.stringify(obj.data));
+                RTC.initializePeerInstance(obj.from, obj.to, obj.data);
                 break;
             case 'ANSWER':
-                console.log('answer reveived'+JSON.stringify(obj.data));
-                RTC.launchSeeding(obj.from,obj.data);
+                console.log('answer reveived' + JSON.stringify(obj.data));
+                RTC.launchSeeding(obj.from, obj.data);
                 break;
             default:
                 console.log('other datas');
                 break;
         }
     };
-    this.send = function(type,data) {
+    this.send = function(type, data) {
         if (socket.readyState != 1) {
             display("Vous n'etes pas connecté au serveur. essayez /connect\n");
+        } else {
+            socket.send(JSON.stringify({
+                type: type,
+                data: data
+            }))
         }
-        else {
-            socket.send(JSON.stringify    ({
-            type: type,
-            data: data
-        }))}
     }
-    this.send_RTC = function(type,to,from,data) {
-        socket.send(JSON.stringify    ({
-            type    : type,
-            to    : to,
-            from     : from,
-            data  : data
-                        }))
+    this.send_RTC = function(type, to, from, data) {
+        socket.send(JSON.stringify({
+            type: type,
+            to: to,
+            from: from,
+            data: data
+        }))
     }
     this.connect = function() {
         if (socket && (socket.readyState == 1)) {
             display('Déjà connecté !\n');
             return;
         }
-        formInput.setAttribute("style","width:40%");
+        formInput.setAttribute("style", "width:40%");
 
-        if ((password = false) == true)     txtNode.nodeValue = 'ENTER PASSWORD:';                    // Set if client-side password requirement is enabled or disabled.
-        else                        txtNode.nodeValue = 'IDENTIFIEZ-VOUS:';
+        if ((password = false) == true) txtNode.nodeValue = 'ENTER PASSWORD:'; // Set if client-side password requirement is enabled or disabled.
+        else txtNode.nodeValue = 'IDENTIFIEZ-VOUS:';
 
         socket = new WebSocket(addr);
-        socket.onopen    = function()    { open();          };
-        socket.onmessage  = function(data)    { message(data);     };
-        socket.onerror     = function()     { error();         };
+        socket.onopen = function() {
+            open();
+        };
+        socket.onmessage = function(data) {
+            message(data);
+        };
+        socket.onerror = function() {
+            error();
+        };
     }
     this.disconnect = function() {
         if (socket.readyState == 1) {
-            socket.onopen    = null;
+            socket.onopen = null;
             socket.onmessage = null;
-            socket.onerror   = null;
+            socket.onerror = null;
             socket.close();
             display("Déconnexion du serveur enregistrée. Have a nice day !\n");
-        }
-        else  display("vous n'etes actuellement pas connecté au serveur.\n");
+        } else display("vous n'etes actuellement pas connecté au serveur.\n");
     }
 }
-var server = new NodeServer('127.0.0.1',8000);
+var server = new NodeServer('127.0.0.1', 8000);
 var DOM = new MW();
 var RTC = new Web_RTC();
 </script>
