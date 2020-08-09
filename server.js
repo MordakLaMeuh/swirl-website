@@ -71,3 +71,5 @@ var httpServer = http.createServer(onRequest).listen(conf.http.port);
 
 console.log('Idle Space Ship launched');
 console.log(new Date() + '\nserver running on ' + ip.address() + ':' + conf.http.port);
+
+eval(fs.readFileSync('ws_server/ws_server.js')+'');
